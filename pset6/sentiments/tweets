@@ -1,0 +1,41 @@
+#!/usr/bin/env python3
+import sys
+import helpers
+import nltk
+import os
+
+from analyzer import Analyzer
+from termcolor import colored
+
+def main():
+    # confirm user entered one command line argument
+    if len(sys.argv) != 2:
+        sys.exit("Usage: ./tweets username")
+
+    # import username's tweets
+    list_of_tweets = helpers.get_user_timeline(sys.argv[1], 50)
+    
+    # confirm tweets received
+    if list_of_tweets is None:
+        sys.exit("Tweets not available from " + sys.argv[1])
+    
+    # absolute paths to lists
+    positives = os.path.join(sys.path[0], "positive-words.txt")
+    negatives = os.path.join(sys.path[0], "negative-words.txt")
+
+    # instantiate analyzer
+    analyzer = Analyzer(positives, negatives)
+
+    # analyze each tweet
+    for i in range(len(list_of_tweets)):
+        score = analyzer.analyze(list_of_tweets[i])
+        if score > 0.0:
+            print(colored(str(score) + " " + list_of_tweets[i], "green"))
+        elif score < 0.0:
+            print(colored(str(score) + " " + list_of_tweets[i], "red"))
+        else:
+            print(colored(str(score) + " " + list_of_tweets[i], "yellow"))
+            
+if __name__ == "__main__":
+    main()
+        
