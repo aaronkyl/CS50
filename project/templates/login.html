@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <div class="splash-screen-background">
+        <div class="login-register-page-content">
+            <form class="login-form" action="{{ url_for('login') }}" data-toggle="validator" method="post">
+                <fieldset>
+                    {% if logininfo == "incorrect" %}
+                    <div class="warning">
+                        <p class="text-danger">Username and/or password incorrect</p>
+                    </div>
+                    <div class="form-group has-error">
+                        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" required type="text" id="inputError"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group has-error">
+                        <input class="form-control" name="password" placeholder="Password" required type="password" id="inputError"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    {% else %}
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" required type="text"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="password" placeholder="Password" required type="password"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    {% endif %}
+                    <button class="btn btn-warning" type="submit">Log In</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

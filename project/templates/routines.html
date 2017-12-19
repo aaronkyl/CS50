@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Routines
+{% endblock %}
+
+{% block main %}
+    <h3>Routines</h3>
+    <div class="text-danger">{{ error }}</div>
+    <form action="{{ url_for('routineadd') }}">
+        <fieldset>
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" id="routine-add-field" name="routine_name" type="text" placeholder="Add Routine">
+                <button class="btn btn-warning" id="routine-add-button" type="submit">Add Routine</button>
+            </div>
+        </fieldset>
+    </form>
+    <div class="existing-items-list">
+        <table>
+            <tr>
+                <th>Routine</th>
+                <th>Edit</th>
+                <th>Activate</th>
+                <th>Inactivate</th>
+            </tr>
+            {% for routine in routines %}
+                <tr>
+                    <td>{{ routine.routine_name }}</td>
+                    <td><a href="{{ url_for('routineedit') }}?routine_id={{ routine.routine_id }}"><i class="far fa-edit"></i></a></td>
+                    {% if routine.active %}
+                        <td></td>
+                        <td><a href="{{ url_for('routineinactivate') }}?routine_id={{ routine.routine_id }}"><i class="far fa-pause-circle"></i></a></td>
+                    {% else %}
+                        <td><a href="{{ url_for('routineactivate') }}?routine_id={{ routine.routine_id }}"><i class="far fa-play-circle"></i></td>
+                        <td></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

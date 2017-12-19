@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div class="splash-screen-background">
+        <div class="login-register-page-content">
+            <form class="register-form" action="{{ url_for('register') }}" data-toggle="validator" method="post">
+                <fieldset>
+                    {% if error %}
+                    <div class="warning">
+                        <p class="text-danger">{{ error }}</p>
+                    </div>
+                    {% endif %}
+                    <div class="form-group">
+                        <input autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" required type="text"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" class="form-control" name="firstname" placeholder="First Name" required type="text"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <input autocomplete="off" class="form-control" name="lastname" placeholder="Last Name" required type="text"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="password" name="password" placeholder="Password" required type="password"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" name="password2" placeholder="Confirm Password" required type="password" data-match="#password" data-match-error="Passwords do not match"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <button class="btn btn-warning" type="submit">Register</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}

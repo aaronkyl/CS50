@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Exercise Edit
+{% endblock %}
+
+{% block main %}
+    <h3>Rename Exercise</h3>
+    {% for item in exercise %}
+    <form action="{{ url_for('exerciseedit') }}?exercise_id={{ item.exercise_id }}" method="post">
+        <fieldset>
+            <div class="form-group">
+                <input autocomplete="off" autofocus class="form-control" name="exercise_name" placeholder="{{ item.exercise_name }}" required type="text"/>
+            </div>
+            <button class="btn btn-warning" type="submit">Rename</button>
+            <a href="{{ url_for('exercises') }}"><button class="btn btn-danger" type="button">Cancel</button></a>
+        </fieldset>
+    </form>
+    {% endfor %}
+{% endblock %}
