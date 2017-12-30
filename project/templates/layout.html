@@ -29,6 +29,7 @@
             <nav class="navbar navbar-default navbar-fixed-top">
                 <div class="container-fluid">
                     <div class="navbar-header">
+                        <a href="{{ url_for('index') }}"><img class="logo" src="static/weight_white.png" alt="logo" height="45"></a>
                         <a class="navbar-brand" href="{{ url_for('index') }}">CS50 Fitness</a>
                     </div>
                     {% if session.user_id %}

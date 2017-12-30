@@ -21,6 +21,11 @@ table {
     color: #f39c12;
 }
 
+.logo {
+    margin: 8px;
+    float: left;
+}
+
 .navbar-default {
     background: #000;
 }
@@ -59,7 +64,7 @@ table {
 }
 
 .sidebar-section-header {
-    font-size: 1em;
+    font-size: 1.2em;
     padding: 1px 0;
 }
 
@@ -139,14 +144,14 @@ table {
     width: 100%;
 }
 
-.login-form .btn:hover, .register-form .btn:hover {
-    background-color: #18bc9c;
-    border-color: #18bc9c;
+.btn-warning:hover {
+    background-color: #18bc9c !important;
+    border-color: #18bc9c !important;
 }
 
-.login-form .btn:focus, .register-form .btn:focus {
-    background-color: #18bc9c;
-    border-color: #18bc9c;
+.btn-warning:focus {
+    background-color: #18bc9c !important;
+    border-color: #18bc9c !important;
 }
 
 fieldset p .text-danger {
@@ -206,9 +211,9 @@ a:hover, .sidebar-section-header:hover {
     margin-bottom: 20px;
 }
 
-.account-maintenance-form, .exercise-edit-form, .routine-edit-form {
-    padding-left: 30px;
-    padding-right: 30px;
+.account-maintenance-form { /*, .exercise-edit-form, .routine-edit-form {*/
+    padding-left: 300px;
+    padding-right: 300px;
 }
 
 .account-maintenance-form h4, .routine-edit-form h4, .h4-not-in-form {

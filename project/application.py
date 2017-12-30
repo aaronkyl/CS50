@@ -426,6 +426,7 @@ def account():
                 firstname = request.form.get('firstname'),
                 lastname = request.form.get('lastname'),
                 user_id = user_id)
+            session["firstname"] = request.form.get('firstname')
         if request.args.get('change_password'):
             current_password = request.form.get("current_password")
             new_password = request.form.get("new_password")
