@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Workout
+{% endblock %}
+
+{% block main %}
+    <h3>Record Workout{% if routine_id %}: {{ routine_exercises[0]["routine_name"] }}{% endif %}</h3>
+    {% if routine_id %}
+    <h4 class="subheader">All fields are required and only numbers are allowed!</h4>
+        <form class="workout-form" action="{{ url_for('workoutsubmit') }}?routine_id={{ routine_id }}" method="post">
+            <table class="centered-table margin-top margin-bottom">
+                <tr>
+                    <th>Exercise</th>
+                    <!--<th></th>-->
+                    <th>Set</th>
+                    <th>Reps</th>
+                    <th>Weight</th>
+                </tr>
+                {% for exercise in routine_exercises %}
+                    {% for i in range(exercise.no_of_sets) %}
+                        {% if loop.first %}
+                            <tr class="row-light-upper-border">
+                                <td>{{ exercise.exercise_name }}</td>
+                                <!--<td class="HIDE_THIS">{{ exercise.exercise_id }}</td>-->
+                                <td>{{ loop.index }}</td>
+                                <td><input class="centered-input" type="text" required name="r{{ exercise.exercise_id }}_{{ loop.index }}"></td>
+                                <td><input class="centered-input" type="text" required name="w{{ exercise.exercise_id }}_{{ loop.index }}"></td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td></td>
+                                <!--<td class="HIDE_THIS">{{ exercise.exercise_id }}</td>-->
+                                <td>{{ loop.index }}</td>
+                                <td><input class="centered-input" type="text" required name="r{{ exercise.exercise_id }}_{{ loop.index }}"></td>
+                                <td><input class="centered-input" type="text" required name="w{{ exercise.exercise_id }}_{{ loop.index }}"></td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            </table>
+            <div class="btn-centered">
+                <button class="btn btn-warning btn-centered" type="submit">Complete</button>
+                <a href="{{ url_for('dashboard') }}"><button class="btn btn-danger btn-centered" type="button">Cancel</button></a>
+            </div>
+        </form>
+    {% else %}
+    <h4 class="subheader">Select a routine to record</h4>
+        <form class="workout-form" action="{{ url_for('workout') }}" method="post">
+            <fieldset>
+                <div class="form-group btn-centered">
+                    <select name="workout_routine" id="workout_routines_dropdown">
+                        {% for routine in all_routines %}
+                            <option value="{{ routine.routine_id }}">{{ routine.routine_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <button class="btn btn-warning"  id="workout_routine_button" type="submit">Select</button>
+                    <a href="{{ url_for('dashboard') }}"><button class="btn btn-danger"  id="workout_routine_cancel_button" type="button">Cancel</button></a>
+                </div>
+            </fieldset>
+        </form>
+    {% endif %}
+{% endblock %}

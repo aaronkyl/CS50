@@ -1,24 +1,3 @@
-import csv
-import urllib.request
-from urllib.parse import urlparse
-
-from flask import redirect, render_template, request, session, url_for
-from functools import wraps
-
-def login_required(f):
-    """
-    Decorate routes to require login.
-
-    http://flask.pocoo.org/docs/0.11/patterns/viewdecorators/
-    """
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect(url_for("login", next=request.url))
-        return f(*args, **kwargs)
-    return decorated_function
-
-# none of these classes are used but I'm keeping them in the code as examples for future reference
 class Exercise_Set:
     def __init__(self, set_no, reps, weight):
         self.set_no = set_no
@@ -76,9 +55,29 @@ class Workout:
                 print("  reps: " + str(set_no.reps))
                 print("  weight: " + str(set_no.weight))
 
-def is_float(string):
-    try:
-        float(string)
-        return True
-    except ValueError:
-        return False
+formdata = [('r3_1', '2'), ('w3_1', '14'), ('r4_1', '2'), ('w4_1', '15'), ('r4_2', '3'), ('w4_2', '16'), ('r6_1', '15'), ('w6_1', '25'), ('r6_2', '15'), ('w6_2', '20'), ('r6_3', '15'), ('w6_3', '17.5')]
+
+workout = Workout(1)
+
+current_exercise_id = None
+current_set = None
+current_reps = None
+current_weight = None
+
+for field in formdata:
+    if field[0].startswith("r"):
+        spliced = field[0].split('_')
+        current_exercise_id = spliced[0][1:]
+        current_set = spliced[1]
+        current_reps = field[1]
+    elif field[0].startswith("w"):
+        spliced = field[0].split('_')
+        if (current_exercise_id == spliced[0][1:] and current_set == spliced[1]):
+            current_weight = field[1]
+            workout.add_set1(current_exercise_id, current_set, current_reps, current_weight)
+        else:
+            print("error with weight field")
+    else:
+        print("error with field overall")
+
+workout.print_all()

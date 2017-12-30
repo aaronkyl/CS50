@@ -7,13 +7,13 @@
 {% block main %}
     <h3>Rename Exercise</h3>
     {% for item in exercise %}
-    <form action="{{ url_for('exerciseedit') }}?exercise_id={{ item.exercise_id }}" method="post">
+    <form class="exercise-edit-form" action="{{ url_for('exerciseedit') }}?exercise_id={{ item.exercise_id }}" method="post">
         <fieldset>
-            <div class="form-group">
-                <input autocomplete="off" autofocus class="form-control" name="exercise_name" placeholder="{{ item.exercise_name }}" required type="text"/>
+            <div class="form-group btn-centered">
+                <input id="exercise_rename_field" autocomplete="off" autofocus class="form-control" name="exercise_name" value="{{ item.exercise_name }}" required type="text"/>
+                <button class="btn btn-warning" id="exercise_rename_submit" type="submit">Rename</button>
+                <a href="{{ url_for('exercises') }}"><button class="btn btn-danger" id="exercise_rename_cancel" type="button">Cancel</button></a>
             </div>
-            <button class="btn btn-warning" type="submit">Rename</button>
-            <a href="{{ url_for('exercises') }}"><button class="btn btn-danger" type="button">Cancel</button></a>
         </fieldset>
     </form>
     {% endfor %}

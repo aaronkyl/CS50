@@ -2,16 +2,27 @@ html, body {
     height: 100%;
 }
 
+h3 {
+    text-align: center;
+    font-size: 2.5em;
+    padding: 10px 0;
+    font-weight: bold;
+}
+
+.subheader {
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
 #register {
     color: #f39c12;
 }
 
 .navbar-default {
     background: #000;
-}
-
-#register:hover {
-    color: #18bc9c;
 }
 
 #screen {
@@ -31,8 +42,10 @@ html, body {
     padding: 30px 15px;
 }
 
-#sidebar .navbar-header {
-    margin-bottom: 40px;
+#sidebar-header{
+    font-size: 1.5em;
+    padding-bottom: 15px;
+    text-align: center;
 }
 
 #sidebar a {
@@ -40,26 +53,23 @@ html, body {
     text-decoration: none;
 }
 
-#sidebar ul {
-    margin-top: -5px;
-}
+#sidebar hr {
+    margin-top: 0;
 
-#sidebar li {
-    list-style: none;
-    text-indent: -30px;
 }
 
 .sidebar-section-header {
     font-size: 1em;
+    padding: 1px 0;
 }
 
 #enter-new-workout {
-    background-color: #f39c12;
+    /*background-color: #f39c12;
     opacity: 1;
     border-radius: 5px;
     text-align: center;
     padding: 5px;
-    font-size: 1.26em;
+    font-size: 1.26em;*/
 }
 
 #content-wrapper {
@@ -144,22 +154,18 @@ fieldset p .text-danger {
     width: 100%;
 }
 
-#exercise-add-field, #routine-add-field, #routine_rename_field {
+#exercise-add-field, #routine-add-field, #routine_rename_field, #exercise_rename_field {
     display: inline-block;
     width: 30%;
     margin-top: 0;
 }
 
-#exercise-add-button, #routine-add-button, #routine_rename_button, #routine_rename_cancel_button {
+#exercise-add-button, #routine-add-button, #routine_rename_button, #routine_rename_cancel_button, #workout_routine_button, #workout_routine_cancel_button, #exercise_rename_cancel, #exercise_rename_submit {
     display: inline-block;
     vertical-align: top;
 }
 
-#add_exercise_form {
-    height: 45px;
-}
-
-#exercise_to_add_dropdown {
+#exercise_to_add_dropdown, #workout_routines_dropdown {
     display: inline-block;
     width: 30%;
     font-size: 1em;
@@ -169,7 +175,7 @@ select {
     height: 45px;
 }
 
-#no_of_reps_field {
+#no_of_sets_field {
     display: inline-block;
     width: 10%;
     height: 45px;
@@ -182,4 +188,81 @@ select {
     padding: 5px auto;
     vertical-align: top;
     height: 100%;
+}
+
+a:hover, .sidebar-section-header:hover {
+    color: #18bc9c !important;
+}
+
+.centered-table {
+    margin: auto;
+}
+
+.margin-top {
+    margin-top: 20px;
+}
+
+.margin-bottom {
+    margin-bottom: 20px;
+}
+
+.account-maintenance-form, .exercise-edit-form, .routine-edit-form {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.account-maintenance-form h4, .routine-edit-form h4, .h4-not-in-form {
+    font-size: 1.4em;
+}
+
+.workout-form {
+    display: block;
+    margin: auto;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.centered {
+    text-align: center !important;
+}
+
+td {
+    padding: 5px 10px;
+    text-align: center;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+th {
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-bottom: 1px solid grey !important;
+    background-color: rgba(149, 165, 166,0.65);
+    padding: 5px 40px;
+}
+
+button.btn-centered {
+    display: inline-block;
+}
+
+div.btn-centered {
+    text-align: center;
+}
+
+.row-light-upper-border {
+    border-top: 1px solid lightgrey;
+}
+
+input.centered-input, textarea.centered-input {
+    text-align: center;
+}
+
+.note {
+    text-align: center;
+    font-style: italic;
+    font-weight: lighter !important;
+    font-size: .9em;
 }

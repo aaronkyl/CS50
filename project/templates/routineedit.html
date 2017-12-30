@@ -5,46 +5,62 @@
 {% endblock %}
 
 {% block main %}
-    <h3>Rename Routine</h3>
-    <div class="text-danger">{{ errortop }}</div>
     {% for item in routine %}
-    <form action="{{ url_for('routineedit') }}?routine_id={{ item.routine_id }}" method="post">
-        <fieldset>
-            <div class="form-group">
-                <input autocomplete="off" autofocus class="form-control" name="routine_name" id="routine_rename_field" placeholder="{{ item.routine_name }}" required type="text"/>
-                <button class="btn btn-warning"  id="routine_rename_button" type="submit">Rename</button>
-                <a href="{{ url_for('routines') }}"><button class="btn btn-danger"  id="routine_rename_cancel_button" type="button">Cancel</button></a>
-            </div>
-        </fieldset>
-    </form>
-    <h3>Add Exercises to {{ item.routine_name }}</h3>
-    <!--show dropdown of all exercises--> <!--'add' button should return to this page-->
-    <div class="text-danger">{{ errorbottom }}</div>
-    <div id="add_exercise_form">
-        <form action="{{ url_for('routineexerciseadd') }}?routine_id={{ item.routine_id }}" method="post">
+        <h3 class="subheader">Edit Routine: {{ item.routine_name }}</h3>
+        <form class="routine-edit-form" action="{{ url_for('routineedit') }}?routine_id={{ item.routine_id }}" method="post">
+            <h4 class="subheader">Rename Routine</h4>
             <fieldset>
-                <select name="exercise_to_add" id="exercise_to_add_dropdown">
-                    {% for exercise in all_exercises %}
-                    <option value="{{ exercise.exercise_id }}">{{ exercise.exercise_name }}</option>
-                    {% endfor %}
-                </select>
-                <input autocomplete="off" class="form-control" name="no_of_reps" id="no_of_reps_field" placeholder="" type="text"/>
-                <button class="btn btn-warning" id="add_exercise_btn" type="submit">Add</button>
+                <div class="form-group btn-centered">
+                    <input autocomplete="off" class="form-control" name="routine_name" id="routine_rename_field" value="{{ item.routine_name }}" placeholder="{{ item.routine_name }}" required type="text"/>
+                    <button class="btn btn-warning"  id="routine_rename_button" type="submit">Rename</button>
+                    <a href="{{ url_for('routines') }}"><button class="btn btn-danger"  id="routine_rename_cancel_button" type="button">Cancel</button></a>
+                </div>
             </fieldset>
         </form>
-    </div>
-    <h3>Exercises in {{ item.routine_name }}</h3>
-    <table>
-        <tr>
-            <th>Exercise</th>
-            <th>Reps</th>
-        </tr>
-        {% for exercise in exercises_in_routine %}
+        <div class="text-danger routine-edit-form centered">{{ errortop }}</div>
+        <!--show dropdown of all exercises--> <!--'add' button should return to this page-->
+        <div id="add_exercise_form">
+            <form class="routine-edit-form" action="{{ url_for('routineexerciseadd') }}?routine_id={{ item.routine_id }}" method="post">
+                <h4 class="subheader">Add Exercises</h4>
+                <p class="note">NOTE: Exercises cannot be added to routines which have been used.</p>
+                <fieldset>
+                    <div class="btn-centered">
+                        <select name="exercise_to_add" id="exercise_to_add_dropdown">
+                            {% for exercise in all_exercises %}
+                                <option value="{{ exercise.exercise_id }}">{{ exercise.exercise_name }}</option>
+                            {% endfor %}
+                        </select>
+                        <input autocomplete="off" class="form-control centered-input" name="no_of_sets" id="no_of_sets_field" placeholder="Sets" required type="text"/>
+                        {% if used %}
+                            <button class="btn btn-warning disabled" id="add_exercise_btn" type="button" inactive>Add</button>
+                        {% else %}
+                            <button class="btn btn-warning" id="add_exercise_btn" type="submit">Add</button>
+                        {% endif %}
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="text-danger routine-edit-form centered">{{ errorbottom }}</div>
+        <h4 class="subheader margin-top h4-not-in-form">Exercises in Routine</h4>
+        <p class="note">NOTE: Exercises cannot be removed from routines which have been used.</p>
+        <table class="centered-table">
             <tr>
-                <td>{{ exercise.exercise_name }}</td>
-                <td>{{ exercise.no_of_reps }}</td>
+                <th>Exercise</th>
+                <th>Sets</th>
+                <th>Remove</th>
             </tr>
-        {% endfor %}
-    </table>
+            {% for exercise in exercises_in_routine %}
+                <tr>
+                    <td>{{ exercise.exercise_name }}</td>
+                    <td>{{ exercise.no_of_sets }}</td>
+                    <td>
+                        {% if used %}
+                            </td>
+                        {% else %}
+                            <a href="{{ url_for('routineexercisedelete') }}?exercise_id={{ exercise.exercise_id }}&amp;routine_id={{ item.routine_id }}"><i class="far fa-minus-square"></i></a></td>
+                        {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
     {% endfor %}
 {% endblock %}

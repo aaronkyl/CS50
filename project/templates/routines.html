@@ -6,17 +6,18 @@
 
 {% block main %}
     <h3>Routines</h3>
-    <div class="text-danger">{{ error }}</div>
+    <p class="note">NOTE: Inactivated routines will not appear in the Record Workout dropdown list.</p>
+    <div class="text-danger centered">{{ error }}</div>
     <form action="{{ url_for('routineadd') }}">
         <fieldset>
-            <div class="form-group">
+            <div class="form-group btn-centered">
                 <input autocomplete="off" class="form-control" id="routine-add-field" name="routine_name" type="text" placeholder="Add Routine">
                 <button class="btn btn-warning" id="routine-add-button" type="submit">Add Routine</button>
             </div>
         </fieldset>
     </form>
     <div class="existing-items-list">
-        <table>
+        <table class="centered-table">
             <tr>
                 <th>Routine</th>
                 <th>Edit</th>

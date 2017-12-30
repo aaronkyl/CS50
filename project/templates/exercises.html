@@ -6,20 +6,18 @@
 
 {% block main %}
     <h3>Exercises</h3>
-    <div>
-        <p>NOTE: Exercises which have been used in a routine cannot be deleted.</p>
-    </div>
-    <div class="text-danger">{{ error }}</div>
+    <p class="note">NOTE: Exercises which have been used in a routine cannot be deleted.</p>
+    <div class="text-danger centered">{{ error }}</div>
     <form action="{{ url_for('exerciseadd') }}">
         <fieldset>
-            <div class="form-group">
+            <div class="form-group btn-centered">
                 <input autocomplete="off" class="form-control" id="exercise-add-field" name="exercise_name" type="text" placeholder="Add Exercise">
                 <button class="btn btn-warning" id="exercise-add-button" type="submit">Add Exercise</button>
             </div>
         </fieldset>
     </form>
     <div class="existing-items-list">
-        <table>
+        <table class="centered-table">
             <tr>
                 <th>Exercise</th>
                 <th>Edit</th>

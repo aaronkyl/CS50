@@ -5,5 +5,21 @@
 {% endblock %}
 
 {% block main %}
-Dashboard
+    {% if workouts %}
+        <h3>Your Past Workouts</h3>
+        <table class="centered-table margin-top">
+            <tr>
+                <th>Workout</th>
+                <th>Date</th>
+            </tr>
+            {% for workout in workouts %}
+                <tr>
+                    <td><a href="{{ url_for('workout_review') }}?workout_id={{ workout.workout_id }}">{{ workout.routine_name }}</a></td>
+                    <td>{{ workout.date }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <h3>Time to start working out!</h3>
+    {% endif %}
 {% endblock %}

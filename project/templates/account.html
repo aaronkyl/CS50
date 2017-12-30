@@ -1,1 +1,41 @@
+{% extends "layout.html" %}
 
+{% block title %}
+    Account Maintenance
+{% endblock %}
+
+{% block main %}
+    <h3>Account Maintenance</h3>
+    <form class="margin-top margin-bottom account-maintenance-form" action="{{ url_for('account') }}?update_name=1" method="post">
+        <h4>Update Name</h4>
+        <fieldset>
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" id="account_firstname_field" name="firstname" type="text" value="{{ user_info[0].firstname }}" required>
+            </div>
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" id="account_lastname_field" name="lastname" type="text" value="{{ user_info[0].lastname }}" required>
+            </div>
+            <button class="btn btn-warning"  id="account_rename_button" type="submit">Update Name</button>
+            <a href="{{ url_for('dashboard') }}"><button class="btn btn-danger"  id="account_rename_cancel_button" type="button">Cancel</button></a>
+        </fieldset>
+    </form>
+    <div class="text-danger">{{ password_error }}</div>
+    <form class="margin-top margin-bottom account-maintenance-form" action="{{ url_for('account') }}?change_password=1" data-toggle="validator" method="post">
+        <h4>Change Password</h4>
+        <fieldset>
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" name="current_password" type="password" placeholder="Current Password" required>
+            </div>
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" id="new_password" name="new_password" type="password" placeholder="New Password" required>
+                <div class="help-block with-errors"></div>
+            </div>
+            <div class="form-group">
+                <input autocomplete="off" class="form-control" name="new_password_conf" data-match="#new_password" data-match-error="Passwords do not match" type="password" placeholder="Confirm New Password" required>
+                <div class="help-block with-errors"></div>
+            </div>
+            <button class="btn btn-warning"  id="password_reset_button" type="submit">Change Password</button>
+            <a href="{{ url_for('dashboard') }}"><button class="btn btn-danger"  id="password_reset_cancel_button" type="button">Cancel</button></a>
+        </fieldset>
+    </form>
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Workout Review
+{% endblock %}
+
+{% block main %}
+    <h3>{{ workout_information[0]["routine_name"] }}</h3>
+    <h4 class="subheader">{{ workout_information[0]["date"] }}</h4>
+    <table class="centered-table margin-top margin-bottom">
+        <tr>
+            <th>Exercise</th>
+            <th>Set</th>
+            <th>Reps</th>
+            <th>Weight</th>
+        </tr>
+        {% for record in workout_information %}
+            {% if record.set_no == 1 %}
+                <tr>
+                    <td>{{ record.exercise_name }}</td>
+                    <td>{{ record.set_no }}</td>
+                    <td>{{ record.reps }}</td>
+                    <td>{{ record.weight }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td></td>
+                    <td>{{ record.set_no }}</td>
+                    <td>{{ record.reps }}</td>
+                    <td>{{ record.weight }}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+    </table>
+    <div class="btn-centered">
+        <a href="{{ url_for('dashboard') }}"><button class="btn btn-warning btn-centered" type="button">Return</button></a>
+    </div>
+{% endblock %}

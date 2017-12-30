@@ -13,6 +13,7 @@
         <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet"/>
         <!-- FontAwesome -->
         <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet"/>
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -49,33 +50,12 @@
                 <div id="sidebar-wrapper">
                     <nav id="sidebar">
                         <div>
-                            <h4 class="sidebar-header">Welcome back, {{ session['firstname'] }}</h4>
+                            <h4 id="sidebar-header">Let's get fit, {{ session['firstname'] }}!</h4>
                         </div>
                         <hr>
-                        <h4 class="sidebar-section-header" id="enter-new-workout"><a href="{{ url_for('workout') }}">Enter New Workout</a></h4>
-                        <hr>
-                        {% if section == "exercises" %}
-                            <h4 class="sidebar-section-header sidebar-active"><a href="{{ url_for('exercises') }}">Exercises</a></h4>
-                            <!---<ul class="sidebar-items">
-                                <li><a href="{{ url_for('exerciseadd') }}">Add New Exercise</a></li>
-                                <li><a href="{{ url_for('exerciseedit') }}">Edit Existing Exercise</a></li>
-                            </ul>--->
-                            <h4 class="sidebar-section-header"><a href="{{ url_for('routines') }}">Routines</a></h4>
-                        {% elif section == "routines" %}
-                            <h4 class="sidebar-section-header"><a href="{{ url_for('exercises') }}">Exercises</a></h4>
-                            <h4 class="sidebar-section-header sidebar-active"><a href="{{ url_for('routines') }}">Routines</a></h4>
-                            <!---<ul class="sidebar-items">
-                                <li><a href="{{ url_for('routineadd') }}">Add New Routine</a></li>
-                                <li><a href="{{ url_for('routineedit') }}">Edit Existing Routine</a></li>
-                            </ul>--->
-                        {% else %}
-                            <h4 class="sidebar-section-header sidebar-active"><a href="{{ url_for('exercises') }}">Exercises</a></h4>
-                            <!---<ul class="sidebar-items">
-                                <li><a href="{{ url_for('exerciseadd') }}">Add New Exercise</a></li>
-                                <li><a href="{{ url_for('exerciseedit') }}">Edit Existing Exercise</a></li>
-                            </ul>--->
-                            <h4 class="sidebar-section-header"><a href="{{ url_for('routines') }}">Routines</a></h4>
-                        {% endif %}
+                        <a href="{{ url_for('workout') }}"><h4 class="sidebar-section-header" id="enter-new-workout">Enter New Workout</h4></a>
+                        <a href="{{ url_for('exercises') }}"><h4 class="sidebar-section-header">Your Exercises</h4></a>
+                        <a href="{{ url_for('routines') }}"><h4 class="sidebar-section-header">Your Routines</h4></a>
                     </nav>
                 </div>
                 <div id="content-wrapper">
