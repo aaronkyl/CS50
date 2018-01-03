@@ -8,7 +8,7 @@
     <h3>Record Workout{% if routine_id %}: {{ routine_exercises[0]["routine_name"] }}{% endif %}</h3>
     {% if routine_id %}
     <h4 class="subheader">All fields are required and only numbers are allowed!</h4>
-        <form class="workout-form" action="{{ url_for('workoutsubmit') }}?routine_id={{ routine_id }}" method="post">
+        <form class="workout-form" autocomplete="off" action="{{ url_for('workoutsubmit') }}?routine_id={{ routine_id }}" method="post">
             <table class="centered-table margin-top margin-bottom">
                 <tr>
                     <th>Exercise</th>

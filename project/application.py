@@ -1,6 +1,8 @@
-# add explanation of flow to dashboard
-#   maybe a Help section on the top next to Account?
+# maybe a Help section on the top next to Account?
 # add Order field for exercises in routine?
+# add previous reps and weights on workout screen to guide current workout?
+# what is current auto-logout timer? if active, turn off
+# ability to upload user profile picture?
 
 from cs50 import SQL
 from flask import Flask, flash, redirect, render_template, request, session, url_for
@@ -99,7 +101,7 @@ def register():
     # if user accessed via POST
     if request.method == "POST":
 
-        # check database to see if user exists and print message if so, otherwise register user
+        # check database to see if user already exists and print message if so, otherwise register user
         id_exists = db.execute("SELECT user_id FROM users WHERE username = :username", username=request.form.get("username").lower())
 
         if len(id_exists) != 0:
@@ -111,6 +113,7 @@ def register():
         result = db.execute("SELECT * FROM users WHERE username = :username", username=request.form.get("username").lower())
         session["user_id"] = result[0]["user_id"]
         session["firstname"] = result[0]["firstname"]
+
         # send user to dashboard
         return redirect(url_for("dashboard"))
 
@@ -121,8 +124,7 @@ def register():
 @app.route("/reset", methods=["GET", "POST"])
 @login_required
 def reset():
-    """Reset password"""
-#### TODO
+    """Change password"""
 
     if request.method == "POST":
 
@@ -141,8 +143,10 @@ def reset():
 
         # compare current password entered on form to current password in database
         db_hash = db.execute("SELECT hash FROM users WHERE id = :user", user=user_id)
+        # if current password does not match password in database, display error
         if not pwd_context.verify(current_password, db_hash[0]["hash"]):
             return apology("Incorrect current password entered")
+        # otherwise change password in database and redirect user to homepage
         else:
             db.execute("UPDATE users SET hash = :pwd WHERE id = :user", \
                 pwd=pwd_context.hash(new_password), \
@@ -155,9 +159,12 @@ def reset():
 @login_required
 def exercises():
     user_id = session["user_id"]
+    # if user submitted form, run exerciseadd
     if request.method == "POST":
         redirect(url_for("exerciseadd"))
+    #if user accessed page via link or redirect
     else:
+        # get all of user's exercises
         exercises = db.execute("SELECT DISTINCT e.exercise_id, e.exercise_name, routine_id \
             FROM exercises e \
             LEFT JOIN routine_exercises re ON re.exercise_id = e.exercise_id \
@@ -165,8 +172,10 @@ def exercises():
             GROUP BY e.exercise_id \
             ORDER BY exercise_name",
             user_id=user_id)
+        # if user reached page via redirect w/ error message, display message
         if request.args.get("error"):
             return render_template("exercises.html", exercises=exercises, error=request.args.get("error"))
+        # otherwise display all of user's exercises
         else:
             return render_template("exercises.html", exercises=exercises)
 
@@ -175,11 +184,14 @@ def exercises():
 def exerciseadd():
     user_id = session["user_id"]
     exercise_name=request.args.get('exercise_name').title()
+    # check is exercise name already exists and if so display error message
     exercise_exists = db.execute("SELECT * FROM exercises WHERE exercise_name = :name AND user_id = :user_id", name=exercise_name, user_id=user_id)
     if exercise_exists:
         return redirect(url_for("exercises", error="Exercise already exists"))
+    # display error message if name field was blank
     elif exercise_name == "":
         return redirect(url_for("exercises", error="Name cannot be blank"))
+    # otherwise update name
     else:
         db.execute("INSERT INTO exercises (exercise_name, user_id) VALUES (:name, :user_id)", name=exercise_name, user_id=user_id)
         return redirect(url_for("exercises"))
@@ -189,9 +201,11 @@ def exerciseadd():
 def exerciseedit():
     user_id = session["user_id"]
     exercise_id = request.args.get('exercise_id')
+    # if user accessed through form submission then update exercise name
     if request.method == "POST":
         db.execute("UPDATE exercises SET exercise_name = :exercise_name WHERE exercise_id = :exercise_id", exercise_name=request.form.get('exercise_name').title(), exercise_id=exercise_id)
         return redirect(url_for("exercises"))
+    # otherwise load edit page
     else:
         exercise = db.execute("SELECT * FROM exercises WHERE exercise_id = :exercise_id AND user_id = :user_id", exercise_id=exercise_id, user_id=user_id)
         return render_template("exerciseedit.html", exercise=exercise)
@@ -199,18 +213,24 @@ def exerciseedit():
 @app.route("/exercisedelete", methods=["GET", "POST"])
 @login_required
 def exercisedelete():
+    # delete exercise
     db.execute("DELETE FROM exercises WHERE exercise_id = :exercise_id", exercise_id=request.args.get('exercise_id'))
     return redirect(url_for("exercises"))
 
 @app.route("/routines", methods=["GET", "POST"])
 @login_required
 def routines():
+    # if user submitted form, run exerciseadd
     if request.method == "POST":
         redirect(url_for("routineadd"))
+    # otherwise
     else:
+        #get all of user's routines
         routines = db.execute("SELECT * FROM routines WHERE user_id = :user_id ORDER BY routine_name", user_id=session.get('user_id'))
+        # if user was redirected here with an error, display error
         if request.args.get("error"):
             return render_template("routines.html", routines=routines, error=request.args.get("error"))
+        # otherwise show all user's routines
         else:
             return render_template("routines.html", routines=routines)
 
@@ -367,7 +387,7 @@ def workoutsubmit():
                     current_set = spliced[1]
                     current_reps = formdata[key]
                 else:
-                    redirect(url_for("dashboard.html"))
+                    redirect(url_for("dashboard"))
             elif key.startswith("w"):
                 spliced = key.split('_')
                 if (current_exercise_id == spliced[0][1:] and current_set == spliced[1] and (formdata[key].isdigit() or is_float(formdata[key]))):
@@ -380,7 +400,7 @@ def workoutsubmit():
                         reps = current_reps,
                         weight = current_weight)
                 else:
-                    redirect(url_for("dashboard.html"))
+                    redirect(url_for("dashboard"))
             else:
                 print("general form field error")
     return redirect(url_for('dashboard'))
