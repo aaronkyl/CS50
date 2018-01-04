@@ -1,0 +1,32 @@
+0.  Pneumonoultramicroscopicsilicovolcanoconioses is a pneumoconiosis caused by inhalation of very fine silicate or quartz dust.
+1.  getrusage returns the resource usage of the current process or the current process's children that have terminated and been waited for.
+2.  A struct rusage variable contains 16 members, two of which are structs with the rest being of type long.
+3.  Passing before and after by reference instead of by value avoids wasting memory to store copies of both structs.
+4.  The main function checks to see if the user entered a dictionary to use or not. If they did not,
+    the function loads the second argument in argv. If they did, it loads the third. The text is loaded
+    using pointer fp. If fp is null then the function returns an error code. As long as fp is not null
+    the function continues. The function initializes a few variable and then begins the process of
+    reading the document using a for loop. The for loop iterates over the characters in the file and checks
+    them one-by-one to determine if the current character is an alpha character or an apostraphe with 
+    the index variable greater than 0 (indicating that a word is being scanned and that the apostraphe 
+    isn't at the beginning of a word). If one of the above is true the loop adds the character to the 
+    'word' array, which was initialized outside the loop to be the size of the longest possible word plus
+    1, to account for the string termination character '\0', and the index variabe is incremented by one.
+    The loop checks to see if the current word is longer than the longest possible real word, and if that
+    is true a while loop takes control and skips the remainder of the nonsense string. The index variable 
+    is then reset to zero to start checking the next word.
+    If the current character was neither an alpha character or an apostraphe in the middle of a word, the
+    loop checks to see if it is a numeric character. If so then a while loop identical to the while loop
+    explained above kicks in to skip the remainder of the nonsense alphanumeric word and the index is
+    reset to zero.
+    If the current character is neither an alpha, apostraphe in the middle of a word, or a number, then
+    the string termination character, '\0', is added to the word array, the words counter is increased
+    by one, the word's spelling is compared to the words in the loaded dictionary using the 'check' function,
+    the time it took to check is calculated and added to the benchmarking total, the word is displayed is it
+    was misspelled and the misspelled counter is increased by one, and the index is reset to zero for the
+    next word. And that was an insane run-on sentence.
+5.  If using fscanf we might end up with a string of characters longer than our 'word' array can handle.
+    Using fgetc allows us to check if the current word has grown beyond what we expected and skip it as
+    nonsense.
+6.  Declaring the variables for check and load as constants stops us from accidentally changing their
+    values, which would be very easy since they are passed by reference instead of by value.

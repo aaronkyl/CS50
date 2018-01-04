@@ -1,0 +1,17 @@
+char* filename;
+sprintf(filename, "%3i.jpg", counter-of-jpgs-found);
+FILE* img = fopen(filename, "w");
+
+>> fread returns how many items of size SIZE were read; try using it directly in a condition
+
+open file (fopen) and check that is not null
+need struct to hold 512 byte segments
+variable to record # of JPEGS found, starting at 0
+repeat until EOF reached (see hint above?)
+    cycle through segments
+        read 512 bytes into buffer
+        if first four bytes match jpeg
+            is this not the first JPEG found? (count variable != 0)
+                close open outup file
+            create file with sprintf
+            write buffer into file

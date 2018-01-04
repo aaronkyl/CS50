@@ -1,0 +1,12 @@
+1.  stdint.h is a header file of typedefs for exact-width integer types and those types' allowed value ranges.
+2.  These types allow us to create custom data types of defined memory size.
+3.  BYTE: 1 byte; DWORD: 4 bytes; LONG: 4 bytes; WORD: 2 bytes 
+4.  The first two bytes of a bitmap file are BM.
+5.  bfSize: size of the bitmap file in bytes; biSize: size of BITMAPINFOHEADER.
+6.  Negative biHeight indicates the bitmap's origin is the upper-left corner; these bitmaps cannot be compressed.
+7.  The BITMAPINFOHEADER filed specifying color depth is biBitCount.
+8.  The files may not exist or the user does not have read/write privileges on them.
+9.  We only want to examine one struct at a time.
+10. When bi.biWidth is 3, padding is 3.
+11. fseek moves the pointer within a stream, allowing us to control where data is examined or written.
+12. SEEK_CUR tells fseek that the current pointer position within the file is the originating point for any repositioning.
